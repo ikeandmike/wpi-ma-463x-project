@@ -1,0 +1,105 @@
+# main module & framework for bootstrap & crossval
+
+## get all the data
+Note: the data has been amended so that class labels M = 1, and B = 0.
+```{r} 
+data = read.csv("complete_dataset.csv")
+trash = data[,1]
+X = data[3:length(data)]
+y = data[,2]
+```
+
+## split into test and train 
+```{r} 
+p = 0.85
+keep = runif(length(length(data[,1]))) < p
+X_train = X[keep,]
+X_test = X[!keep,]
+y_train = y[keep]
+y_test = y[!keep]
+```
+
+## bootstrapping framework
+```{r}
+
+bootstrap_framework = function(X_train, y_train) {
+  # constants
+  p = 0.85
+  iterations = 1000
+  models = 10
+  results = matrix(0, models, iterations)
+  k_fold = 5
+  train_length = length(X_train[,1])
+  fold_size = as.integer(train_length / k_fold)
+  
+  for(i in 1:iterations) {
+    # generate bootstrapped sample
+    bootstrap_ind = sample(train_length,train_length,replace=TRUE)
+    X_boot = X_train[bootstrap_ind,]
+    y_boot = y_train[bootstrap_ind]
+    
+    # TODO:
+    # store whatever values we need here
+    # both for *saving* results, but also different *values of params*
+    
+    for(k in 1:k_fold) {
+      ## split data into train (X_tr, y_tr) and validation (X_val, y_val)
+      test_i = ((k - 1) * fold_size): ((k) * fold_size)
+      keep = (1:length(X_boot[,1])) * 0 + 1
+      keep[test_i] = 0
+    
+      X_tr = X_boot[keep,]
+      y_tr = y_boot[keep]
+      
+      X_val =  X_boot[!keep,]
+      y_val =  y_boot[!keep]
+      
+      ## TODO: add models to test below
+      
+      
+      
+      ## TODO: store results into result matrix
+      
+    }
+  }
+  
+  
+  ## TODO: generate charts, save results, return results or print results
+  
+  ## TODO: determine best model
+  
+}
+```
+
+## run bootstrap_framework on unpreprocessed data
+
+```{r}
+bootstrap_framework(X_train, y_train)
+```
+
+## run bootstrap_framework on lasso predictors
+
+```{r}
+bootstrap_framework(X_train, y_train)
+```
+
+## run bootstrap_framework on pca (variance = 90)
+
+```{r}
+bootstrap_framework(X_train, y_train)
+```
+
+## run bootstrap_framework on pca (variance = 95)
+
+```{r}
+bootstrap_framework(X_train, y_train)
+```
+
+## run bootstrap_framework on pca (variance = 99)
+
+```{r}
+bootstrap_framework(X_train, y_train)
+```
+
+## extra
+## figure out semi-supervised learning
