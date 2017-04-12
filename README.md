@@ -4,8 +4,8 @@ Final Project for MA463X: Data Analytics &amp; Statistical Learning. Completed b
 
 ## tasks
 
-- [ ] lasso
-- [ ] pca
+- [x] lasso
+- [x] pca
 
 - [ ] logistic
 - [ ] lda
