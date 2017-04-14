@@ -2,7 +2,6 @@ import numpy as np
 from sklearn.decomposition import PCA
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import cross_val_score
-from bootstrap import bootstrap
 
 def randForest(x, y, numTrees, cv):
 	"""Computes random forest classification on data set x
@@ -29,12 +28,6 @@ def randForest(x, y, numTrees, cv):
 	return accuracy
 
 if __name__ == '__main__':
-	from read_data import read_data
-	from partition_data import partition_data
-	X, y = read_data()
-	print "Shape of X: " + str(X.shape)
-	print "Shape of Y: " + str(y.shape)
-	xtrain, ytrain,xtest,ytest = partition_data(X, y)
-	print "Shape of Xtrain: " + str(xtrain.shape)
-	print "Shape of Ytrain: " + str(ytrain.shape)
-	accuracy = randForest(xtrain, ytrain, 6, 10)
+	from data_utils import get_training
+	X, y = get_training()
+	accuracy = randForest(X, y, 6, 10)
