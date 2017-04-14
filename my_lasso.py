@@ -1,8 +1,29 @@
 import numpy as np
 from sklearn import linear_model
 
-def my_lasso(X, y, alpha=1.0):
-    """Performs pca on the data and returns the transformed data
+def my_lasso(X, y, alpha=0.5):
+    """Performs lasso on the data and returns the transformed data
+
+    Args:
+        X - the data to perform lassp upon (N,D)
+        y - the class labels (N,)
+        alpha - lasso hyperparam
+
+    Returns: 
+        modified data (N,?)
+    """
+    clf = linear_model.Lasso(alpha=alpha)
+    clf.fit(X,y)
+    coef = clf.coef_   
+    keep = coef > 0.0
+    X_new = X[:,keep]
+    return X_new
+
+def test_lasso(X, y, alpha=0.5):
+    """Performs lasso on the data and returns the transformed data
+
+        This is for testing lasso on the data, it additionally returns 
+        list of coeffiecents for charting/exploration.
 
     Args:
         X - the data to perform pca upon (N,D)
@@ -21,13 +42,11 @@ def my_lasso(X, y, alpha=1.0):
     return X_new, coef
 
 if __name__ == '__main__':
-    from read_data import read_data
-    from partition_data import partition_data
-    X, y = read_data()
-    X_tr, y_tr,_,_ = partition_data(X, y)
-    X_new, coef = my_lasso(X_tr,y_tr)
+    from data_utils import get_training
+    X, y = get_training()
+    X_new, coef = test_lasso(X,y)
     print 'pre lasso shape'
-    print np.shape(X_tr)
+    print np.shape(X)
     print 'post lasso shape'
     print np.shape(X_new)
 
@@ -38,11 +57,10 @@ if __name__ == '__main__':
     plt.show()
 
     from my_pca import my_pca
-    V, _ = my_pca(X_tr)
-    X_pca = X_tr.dot(V[:,0:5]) # keeping top 5 for no good reason
+    X_pca = my_pca(X, 30)
     print 'post pca shape - and keeping first 5 principal dimensions'
     print np.shape(X_pca)
-    X_pca_lasso, pca_coef = my_lasso(X_pca, y_tr)
+    X_pca_lasso, pca_coef = test_lasso(X_pca, y)
     print 'post lasso on pca shape'
     print np.shape(X_pca_lasso)
 
@@ -50,4 +68,3 @@ if __name__ == '__main__':
     plt.ylabel('relative importance of predictors')
     plt.title('performing lasso post pca')
     plt.show()
-
