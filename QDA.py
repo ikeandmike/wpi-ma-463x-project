@@ -1,5 +1,4 @@
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
-from sklearn.model_selection import cross_val_score
 import numpy as np
 
 # Runs QDA and computes the mean accuracy on the given data and labels 
