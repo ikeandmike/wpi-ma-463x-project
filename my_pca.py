@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn.decomposition import PCA
 
-def my_pca(X, variance=1.0):
+def my_pca(X):
     """Performs pca on the data and returns the transformed data
 
     Args:
