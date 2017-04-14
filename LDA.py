@@ -3,7 +3,6 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 
 # Runs LDA and computes the mean accuracy on the given test data and labels.
 
-
 def LDA(X_train, Y_train, X_test, Y_test):
 
     LDAtest = LinearDiscriminantAnalysis()
