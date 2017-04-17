@@ -1,5 +1,6 @@
+from data_utils import *
+from sklearn.model_selection import KFold, cross_val_score
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
-import numpy as np
 
 # Runs QDA and computes the mean accuracy on the given data and labels 
 
