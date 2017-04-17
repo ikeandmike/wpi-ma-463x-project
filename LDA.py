@@ -1,4 +1,5 @@
-import numpy as np
+from data_utils import *
+from sklearn.model_selection import KFold, cross_val_score
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 
 # Runs LDA and computes the mean accuracy on the given test data and labels.
