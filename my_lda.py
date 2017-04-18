@@ -1,5 +1,6 @@
 from data_utils import *
 from my_pca import *
+from my_lasso import *
 from sklearn.model_selection import KFold, cross_val_score
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 
