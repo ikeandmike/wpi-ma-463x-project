@@ -64,17 +64,28 @@ if __name__ == '__main__':
 
 """
 output:
-    ____________________________________________________________
-    | predictors =  3 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
-    | predictors =  5 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
-    | predictors =  7 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
-    | predictors =  9 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
-    | predictors = 11 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
-    | predictors = 13 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
-    | predictors = 15 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
-    | predictors = 17 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
-    | predictors = 19 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
-    | predictors = 21 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
-    | predictors = 30 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
-    ____________________________________________________________
+_______________________PCA__________________________________
+| predictors =  3 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
+| predictors =  5 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
+| predictors =  7 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
+| predictors =  9 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
+| predictors = 11 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
+| predictors = 13 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
+| predictors = 15 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
+| predictors = 17 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
+| predictors = 19 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
+| predictors = 21 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
+| predictors = 30 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
+____________________________________________________________
+_______________________Lasso________________________________
+| predictors =  0 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
+| predictors =  0 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
+| predictors =  0 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
+| predictors =  0 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
+| predictors =  0 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
+| predictors =  0 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
+| predictors =  0 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
+| predictors =  1 | 10-Fold Accuracy: 0.964 | LOOCV Accuracy: 0.960 |
+____________________________________________________________
+
 """
