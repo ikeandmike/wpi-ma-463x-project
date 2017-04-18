@@ -4,7 +4,10 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import cross_val_score
 from bootstrap import bootstrap
 
-def randForest(x, y, numTrees, cv):
+
+#return the  best model and a visualization x=numTrees y = accuracy
+#loop through number of trees and within loop through cv
+def best_rand_forest(x, y):
 	"""Computes random forest classification on data set x
 
     Gets the random forest classifier, assumes want 100 random 
@@ -20,13 +23,20 @@ def randForest(x, y, numTrees, cv):
     Returns:
         accuracy: a string giving the cross validation accuracy
     """
-	
-	clf = RandomForestClassifier(n_estimators=numTrees, max_features="sqrt")
-	#performs cross validation on cv folds
-	cvscore = cross_val_score(clf, x, y, cv = cv)
-	accuracy = ("Accuracy: %0.2f (+/- %0.2f)" % (cvscore.mean(), cvscore.std() * 2))
-	print accuracy
-	return accuracy
+    bestAccuracy = 0
+    bestclf = None
+	for x in range(0:100):
+		clf = RandomForestClassifier(n_estimators=numTrees, max_features="sqrt")
+
+		#performs cross validation on cv folds
+		cvscore = cross_val_score(clf, x, y, cv = 5)
+		if cvscore.mean() >= bestAccuracy:
+			bestAccuracy = cvscore.mean()
+			bestclf = clf
+		#accuracy = ("Accuracy: %0.2f (+/- %0.2f)" % (cvscore.mean(), cvscore.std() * 2))
+		#print accuracy
+	print bestAccuracy
+	return bestclf
 
 if __name__ == '__main__':
 	from read_data import read_data
@@ -37,4 +47,4 @@ if __name__ == '__main__':
 	xtrain, ytrain,xtest,ytest = partition_data(X, y)
 	print "Shape of Xtrain: " + str(xtrain.shape)
 	print "Shape of Ytrain: " + str(ytrain.shape)
-	accuracy = randForest(xtrain, ytrain, 6, 10)
+	accuracy = best_rand_forest(xtrain, ytrain, 6, 10)
