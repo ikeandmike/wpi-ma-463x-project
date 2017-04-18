@@ -1,5 +1,5 @@
 import pandas as pd
-import numpy as np 
+import numpy as np
 
 def get_training():
     """partitions data into final train
@@ -23,7 +23,7 @@ def get_testing():
     _, _, X_te, y_te = _partition_data(X, y)
     return X_te, y_te
 
-def _read_data(file_name = 'complete_dataset.csv'):
+def _read_data(file_name='complete_dataset.csv'):
     """Reads data from file (private function)
 
     Gets the data from the csv and splits it into X,y
@@ -36,7 +36,7 @@ def _read_data(file_name = 'complete_dataset.csv'):
         X - an numpy array of size (N,D) containing all the data in the set
         y - a numpy array of size (N,) containing class labels
     """
-    
+
     df=pd.read_csv(file_name, sep=',',header=None)
     values = df.values
     y = values[:,1]
