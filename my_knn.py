@@ -3,10 +3,14 @@ from data_utils import * # Utility functions we wrote
 from sklearn.model_selection import KFold, cross_val_score
 from sklearn.neighbors import KNeighborsClassifier
 
+import matplotlib.pyplot as plt
+
 """
 Findings
 
 Model performs around the same for K between 3 and 21. This implies that the classes of data are very well-separable.
+Accuracy begins to take a steady drop when K is larger than 21
+Chose K=3, there aren't statistically significant differences between small values of K and a simpler model usually generalizes better
 """
 
 # Warning
@@ -14,6 +18,18 @@ Model performs around the same for K between 3 and 21. This implies that the cla
 
 def best_knn():
 	return KNeighborsClassifier(n_neighbors=3) # Empirically, k=3 was best under both 10-fold and LOO CV.
+
+# TODO Pulled this from randomForest -- move to util?
+# Would have to generalize, pass in labels
+def plotAccuracy(accuracy, k, title):
+    fig = plt.figure(figsize=(10,4),tight_layout=True)
+    ax = fig.add_subplot(1,1,1)
+    plt.plot(k, accuracy)
+    ax.set_xlabel("Number of Neighbors (k)")
+    ax.set_ylabel("Accuracy")
+    ax.set_title(title, fontsize = 12)
+    plt.show()
+
 
 def getScores(X, Y, k_list, num_cv_folds):
 	kfold = KFold(n_splits=num_cv_folds)
@@ -43,4 +59,6 @@ if __name__ == '__main__':
 		print("| k = %2d | 10-Fold Accuracy: %.3f | LOOCV Accuracy: %.3f |" % (k, acc1, acc2))
 	print("____________________________________________________________")
 
-	# TODO Generate graphs of k vs. accuracy
+	# Generate graphs of k vs. accuracy
+	plotAccuracy(ten_scores, k_list, "K-Nearest Neighbors Accuracy (10 Fold CV)")
+	plotAccuracy(loocv_scores, k_list, "K-Nearest Neighbors Accuracy (LOOCV)")

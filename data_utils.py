@@ -1,27 +1,54 @@
 import pandas as pd
 import numpy as np
 
-def get_training():
+
+_PREDICTORS = ['radius', 'texture', 'perimeter', 'area', 'smooth',
+               'compact', 'concav', 'concavpt', 'sym', 'frac']
+_HEADER = ['diag']                                 +\
+          ['mean_' + pred for pred in _PREDICTORS] +\
+          ['std_' + pred for pred in _PREDICTORS]  +\
+          ['worst_' + pred for pred in _PREDICTORS]
+
+
+def get_training(as_dataframe=False):
     """partitions data into final train
 
+    Args:
+        as_dataframe: set this to True to return labels and predictors in a
+                      DataFrame with named columns
     Returns:
-        The train
+        The training data
         X_tr, y_tr - the data and class labels for training
     """
     X, y = _read_data()
     X_tr, y_tr,_,_ = _partition_data(X, y)
-    return X_tr, y_tr
 
-def get_testing():
+    if as_dataframe:
+        combined = np.hstack((y_tr.reshape(y_tr.size, 1), X_tr))
+        combined = pd.DataFrame(combined, columns=_HEADER)
+        return combined
+    else:
+        return X_tr, y_tr
+
+def get_testing(as_dataframe=False):
     """partitions data into final test
 
+    Args:
+        as_dataframe: set this to True to return labels and predictors in a
+                      DataFrame with named columns
     Returns:
         The testing data
         X_te, y_te - the data and class labels for testing
     """
     X, y = _read_data()
     _, _, X_te, y_te = _partition_data(X, y)
-    return X_te, y_te
+
+    if as_dataframe:
+        combined = np.hstack((y_te.reshape(y_te.size, 1), X_te))
+        combined = pd.DataFrame(combined, columns=_HEADER)
+        return combined
+    else:
+        return X_te, y_te
 
 def _read_data(file_name='complete_dataset.csv'):
     """Reads data from file (private function)
