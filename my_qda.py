@@ -3,6 +3,7 @@ from my_pca import my_pca
 from my_lasso import my_lasso
 from sklearn.model_selection import KFold, cross_val_score
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
+import matplotlib.pyplot as plt
 
 def best_qda():
     #TODO find best QDA using data
@@ -54,6 +55,15 @@ def getScores_lasso(X, Y, alpha_list, num_cv_folds):
 
     return scores
 
+def plotAccuracy(accuracy, pred, title):
+    fig = plt.figure(figsize=(10,4),tight_layout=True)
+    ax = fig.add_subplot(1,1,1)
+    plt.plot(k, accuracy)
+    ax.set_xlabel("Predictors")
+    ax.set_ylabel("Accuracy")
+    ax.set_title(title, fontsize = 12)
+    plt.show()
+
 if __name__ == '__main__':
 
     X, Y = get_training()
@@ -75,6 +85,8 @@ if __name__ == '__main__':
 	acc1 = ten_scores_subsets[i]
 	acc2 = loocv_scores_subsets[i]
 	print("| subset = %2d | 10-Fold Accuracy: %.3f | LOOCV Accuracy: %.3f |" % (i, acc1, acc2))
+    plotAccuracy(ten_scores, subsets, "(10 Fold CV)")
+    plotAccuracy(loocv_scores, subsets, "(LOOCV)")
     print("____________________________________________________________")
 
 
@@ -84,6 +96,8 @@ if __name__ == '__main__':
 	acc1 = ten_scores_pca[i]
 	acc2 = loocv_scores_pca[i]
 	print("| predictors = %2d | 10-Fold Accuracy: %.3f | LOOCV Accuracy: %.3f |" % (p, acc1, acc2))
+    plotAccuracy(ten_scores, num_pred_list, "(10 Fold CV)")
+    plotAccuracy(loocv_scores, num_pred_list, "(LOOCV)")
     print("____________________________________________________________")
 
     print("_______________________Lasso________________________________")
@@ -92,5 +106,7 @@ if __name__ == '__main__':
 	acc1 = ten_scores_lasso[i]
 	acc2 = loocv_scores_lasso[i]
 	print("| alpha = %.3f | 10-Fold Accuracy: %.3f | LOOCV Accuracy: %.3f |" % (a, acc1, acc2))
+    plotAccuracy(ten_scores, alpha_list, "(10 Fold CV)")
+    plotAccuracy(loocv_scores, alpha_list, "(LOOCV)")
     print("____________________________________________________________")
     # TODO Generate graphs of num_pred vs. accuracy
