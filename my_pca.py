@@ -1,5 +1,6 @@
 import numpy as np
 from sklearn.decomposition import PCA
+from sklearn import preprocessing
 
 def my_pca(X, d = 3):
     """Performs pca on the data and returns the transformed data
@@ -14,16 +15,16 @@ def my_pca(X, d = 3):
     """
     N, D = np.shape(X)
     pca = PCA(n_components=D)
-    pca.fit(X)
-    coef = pca.components_
-    return X.dot(coef[:,0:d])
-
+    X_scaled = preprocessing.scale(X)
+    X_reduced = pca.fit_transform(X_scaled)
+    return X_reduced[:,0:d]
 
 if __name__ == '__main__':
     from data_utils import get_training
     X, y = get_training()
     N, D = np.shape(X)
     pca = PCA(n_components=D)
+    X = preprocessing.scale(X)
     pca.fit(X)
     coef = pca.components_
     variances = pca.explained_variance_ratio_
