@@ -89,13 +89,12 @@ class Validation(object):
 
                 # pca
                 if self.pca:
-
                     pca = PCA(n_components=self.components)
                     # find components on train
                     X_tr = pca.fit_transform(X_tr) #[:,0:self.components]
                     # transform test on train
                     X_te = pca.transform(X_te) #[:,0:self.components]
-
+                    
                 # lasso
                 if self.lasso:
                     clf = Lasso(alpha=self.alpha)
@@ -109,8 +108,6 @@ class Validation(object):
                 # train & test
                 model.fit(X_tr, y_tr)
                 y_hat = model.predict(X_te)
-                pos = y_te[y_hat == 1]
-                true_pos = (pos == 1)
                 self.results['accuracy'].append(accuracy_score(y_te, y_hat))
                 self.results['recall'].append(recall_score(y_te, y_hat))
                 self.results['precision'].append(precision_score(y_te, y_hat))
