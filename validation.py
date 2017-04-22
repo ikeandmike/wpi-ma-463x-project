@@ -2,9 +2,9 @@ import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import Lasso
 from sklearn.decomposition import PCA
-from sklearn.metrics import accuracy_score 
-from sklearn.metrics import recall_score 
-from sklearn.metrics import precision_score 
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import recall_score
+from sklearn.metrics import precision_score
 
 
 class Validation(object):
@@ -49,7 +49,7 @@ class Validation(object):
         }
 
     def update(self, k=5, bootstrap=100, normalize=True, pca=5, lasso=-1.0):
-        """ updates validation framework with new hyper-params
+        """ updates validation framework with new hyper-params (preprocessing)
 
         """
         self.normalize = normalize
@@ -68,6 +68,7 @@ class Validation(object):
     def cross_val_accuracy(self, model):
         """
             performs validation on model, and returns the results
+            general use will be to change the model and test it
 
             Args:
                 model - the model to validate
