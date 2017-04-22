@@ -48,7 +48,24 @@ class Validation(object):
             'precision': []
         }
 
-    def validate(self, model):
+    def update(self, k=5, bootstrap=100, normalize=True, pca=5, lasso=-1.0):
+        """ updates validation framework with new hyper-params
+
+        """
+        self.normalize = normalize
+
+        self.k = k
+
+        self.bootstrap = bootstrap > 0
+        self.samples = bootstrap
+
+        self.pca = pca > 0
+        self.components = pca
+
+        self.lasso = lasso > 0
+        self.alpha = lasso
+
+    def cross_val_accuracy(self, model):
         """
             performs validation on model, and returns the results
 
@@ -57,6 +74,8 @@ class Validation(object):
 
             Returns:
                 a dictionary of lists of accuracy, recall and precision
+                each being a scalar. Use get_detailed_results to get 
+                lists of each metric.
         """
         aggregates = []
         N = len(self.y)
@@ -113,6 +132,19 @@ class Validation(object):
                 self.results['precision'].append(precision_score(y_te, y_hat))
             # end cv
         # end bootstrapping
+        return np.array(self.results['accuracy']).mean()
+
+    def get_detailed_results(self):
+        """Helper function that gets full set of results
+
+            Returns:
+                Returns a dictionary of results as follows:
+                {
+                    'accuracy' : [list of accuracies],
+                    'recall': [list of recall results],
+                    'precision': [list of precision results]
+                }
+        """
         return self.results
 
 if __name__ == '__main__':
@@ -120,8 +152,25 @@ if __name__ == '__main__':
     from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
     X, y = get_training()
     mdl = LinearDiscriminantAnalysis()
-    val = Validation(X, y, 5, 100, True, 5)
-    results = val.validate(mdl)
-    print 'accuracy: {0}'.format(np.array(results['accuracy']).mean())
-    print 'recall: {0}'.format(np.array(results['recall']).mean())
-    print 'precision: {0}'.format(np.array(results['precision']).mean())
+    val = Validation(X, y)
+
+    pca_comp_to_test = [ 1, 3, 5, 10, 30]
+    results = []
+    best_so_far = (0, -1)
+
+    # common validation pattern
+    for d in pca_comp_to_test:
+        # update hyper params for preprocessing
+        val.update(pca=d)
+        
+        # generally change model params
+        acc = val.cross_val_accuracy(mdl)
+        results.append(acc)
+        # if you're interested in more details, use val.get_detailed_results()
+
+        # update best so far
+        if acc > best_so_far[0]:
+            best_so_far = (acc, d)
+
+    # analyze results...
+    print 'best # of comp for pca for LDA: {0} (accuracy: {1})'.format(best_so_far[1], best_so_far[0])
