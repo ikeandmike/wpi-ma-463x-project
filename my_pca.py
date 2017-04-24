@@ -14,10 +14,10 @@ def my_pca(X, d = 3):
         explained variance (D)
     """
     N, D = np.shape(X)
-    pca = PCA(n_components=D)
+    pca = PCA(n_components=d)
     X_scaled = preprocessing.scale(X)
     X_reduced = pca.fit_transform(X_scaled)
-    return X_reduced[:,0:d]
+    return X_reduced
 
 if __name__ == '__main__':
     from data_utils import get_training
