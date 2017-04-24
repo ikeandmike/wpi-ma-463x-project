@@ -48,22 +48,20 @@ class Validation(object):
             'precision': []
         }
 
-    def update(self, k=5, bootstrap=100, normalize=True, pca=5, lasso=-1.0):
+    def update(self, normalize=True, pca=None, lasso=None):
         """ updates validation framework with new hyper-params (preprocessing)
 
         """
-        self.normalize = normalize
+        if normalize is not None:
+            self.normalize = normalize
 
-        self.k = k
+        if pca is not None:
+            self.pca = pca > 0
+            self.components = pca
 
-        self.bootstrap = bootstrap > 0
-        self.samples = bootstrap
-
-        self.pca = pca > 0
-        self.components = pca
-
-        self.lasso = lasso > 0
-        self.alpha = lasso
+        if lasso is not None:
+            self.lasso = lasso > 0
+            self.alpha = lasso
 
     def cross_val_accuracy(self, model):
         """
